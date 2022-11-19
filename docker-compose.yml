@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+   mysql:
+      restart: always
+      build: 'mysql_database'
+      environment:
+         - MYSQL_DATABASE=${MYSQL_DATABASE}
+         - MYSQL_USER=${MYSQL_USER}
+         - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      ports:
+         - "3309:3306"
+
+   mongo:
+      image: mongo:latest
+      restart: always
+      environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+            - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      ports:
+         - "27019:27017"
