@@ -9,7 +9,7 @@ services:
          - MYSQL_PASSWORD=${MYSQL_PASSWORD}
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       ports:
-         - "3309:3306"
+         - "3307:3306"
 
    mongo:
       image: mongo:latest
@@ -19,4 +19,4 @@ services:
             - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
             - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
       ports:
-         - "27019:27017"
+         - "27018:27017"
