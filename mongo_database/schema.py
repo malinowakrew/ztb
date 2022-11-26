@@ -11,7 +11,7 @@ class Plane(DynamicDocument):
 
 
 if __name__ == "__main__":
-    Plane(name='test', mileage=10).save()
+    Plane(name='test', mileage=11).save()
 
     for post in Plane.objects:
         print(post.name, post.mileage)

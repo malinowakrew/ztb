@@ -14,12 +14,12 @@ class Plane(BaseModel):
 
 
 if __name__ == "__main__":
-    # db.connect()
-    # db.create_tables([Plane])
+    db.connect()
+    db.create_tables([Plane])
 
-    i = Plane(model='szybki_ale_stary', mileage=4800000)
+    i = Plane(model='szybki', mileage=10)
     i.save()
 
-    inst = Plane.select().where(Plane.mileage > 1000)
+    inst = Plane.select().where(Plane.mileage >= 10)
     for o in inst:
         print(o.model, o.mileage)
