@@ -1,3 +1,4 @@
 pymysql==1.0.2
 peewee~=3.15.4
 mongoengine~=0.24.2
+pandas~=1.5.1

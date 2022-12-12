@@ -8,18 +8,33 @@ class BaseModel(Model):
         database = db
 
 
-class Plane(BaseModel):
-    model = CharField()
-    mileage = IntegerField()
+class Marketing_Airline(BaseModel):
+    marketing_airline_network = CharField()
+    iata_code_marketing_airline = CharField()
+    operated_or_branded_code_share_partners = CharField()
+    dot_id_marketing_airline = IntegerField()
+
+
+class Airline(BaseModel):
+    airline = CharField()
+    operating_airline = CharField()
+    origin_state_name = CharField()
+    dot_id_operating_airline = IntegerField()
+    dot_id_marketing_airline = ForeignKeyField(Marketing_Airline, to_field='dot_id_marketing_airline')
+
+
+class AirPlane(BaseModel):
+    tail_number = CharField()
+    total_air_time = FloatField()
+    dot_id_operating_airline = ForeignKeyField(Airline, to_field='dot_id_operating_airline')
 
 
 if __name__ == "__main__":
-    db.connect()
-    db.create_tables([Plane])
+    # db.connect()
+    # dq = Marketing_Airline.delete()
+    # dq.execute()
+    # db.create_tables([Marketing_Airline])
 
-    i = Plane(model='szybki', mileage=10)
-    i.save()
-
-    inst = Plane.select().where(Plane.mileage >= 10)
+    inst = Marketing_Airline.select()#.where(Plane.mileage >= 10)
     for o in inst:
-        print(o.model, o.mileage)
+        print(o.marketing_airline_network)
