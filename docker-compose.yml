@@ -11,9 +11,8 @@ services:
          - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       ports:
          - "3307:3306"
-      volumes:
-         - mongo_database/my-db:/var/lib/mysql
-
+#      volumes:
+#         - ./my-db:/var/lib/mysql
    mongodb:
       image: mongo:latest
       restart: always
@@ -23,3 +22,5 @@ services:
             - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
       ports:
          - "27018:27017"
+      volumes:
+         -  ./mongo:/data/db/mongo
