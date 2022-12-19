@@ -27,16 +27,19 @@ class Airline(BaseModel):
                                                # to_field='dot_id_marketing_airline')
 
 
-class AirPlane(BaseModel):
+class Airplane(BaseModel):
     tail_number = CharField(null=True)
     # total_air_time = FloatField()
     dot_id_operating_airline = ForeignKeyField(Airline,
                                                backref='airline',
                                                lazy_load=False)
 
+class Flight(BaseModel):
+    distance = FloatField(null=True)
+
 
 if __name__ == "__main__":
-    # db.connect()
+    db.connect()
     # dq = AirPlane.delete()
     # dq.execute()
     #
@@ -46,8 +49,7 @@ if __name__ == "__main__":
     # dq = Marketing_Group_Airline.delete()
     # dq.execute()
     #
-    # db.create_tables([Marketing_Group_Airline])
-    # db.create_tables([Airline, AirPlane])
+    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Flight])
 
     # inst = Airline.select(
     #     Marketing_Group_Airline.iata_code_marketing_airline,
@@ -55,12 +57,10 @@ if __name__ == "__main__":
     #     fn.COUNT(Airline.airline).alias('count')).join(Marketing_Group_Airline).group_by(Marketing_Group_Airline.iata_code_marketing_airline).dicts()
     # for o in inst:
     #     print(o)
-    #
-    # print('-----')
-    #
+
     # inst = Airline.select(Airline.airline).where(Airline.airline == 'Southwest Airlines Co.')
     # print(len(inst))
 
-    dq = AirPlane.select(AirPlane.tail_number).dicts()
-    for o in dq:
-        print(o)
+    # dq = AirPlane.select(AirPlane.tail_number).dicts()
+    # for o in dq:
+    #     print(o)
