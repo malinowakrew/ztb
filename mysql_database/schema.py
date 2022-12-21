@@ -61,6 +61,6 @@ if __name__ == "__main__":
     # inst = Airline.select(Airline.airline).where(Airline.airline == 'Southwest Airlines Co.')
     # print(len(inst))
 
-    # dq = AirPlane.select(AirPlane.tail_number).dicts()
+    # dq = Airplane.select(Airplane.tail_number).dicts()
     # for o in dq:
     #     print(o)

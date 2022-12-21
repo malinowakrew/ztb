@@ -19,7 +19,7 @@ def write_item(values: tuple, columns: list, class_type: str, foreign_keys: dict
 
 
 def write_table(df: pd.DataFrame, columns: list, class_type: str, foreign_keys: dict = {}):
-    data = df[columns_list].drop_duplicates()
+    data = df[columns].drop_duplicates()
 
     for item in zip(*[data[name] for name in columns]):
         write_item(item, columns, class_type, foreign_keys)
