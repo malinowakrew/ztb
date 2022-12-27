@@ -15,15 +15,16 @@ class Plane(DynamicDocument):
 class Marketing_Group_Airline(DynamicDocument):
     marketing_airline_network = StringField()
     iata_code_marketing_airline = StringField()
-    operated_or_branded_code_share_partners = StringField()
+    # operated_or_branded_code_share_partners = StringField()
     dot_id_marketing_airline = IntField()
 
 
 class Airline(DynamicDocument):
     airline = StringField()
     operating_airline = StringField()
-    origin_state_name = StringField()
+    # origin_state_name = StringField()
     dot_id_operating_airline = IntField()
+    # operated_or_branded_code_share_partners = ListField(ReferenceField(Marketing_Group_Airline, reverse_delete_rule=CASCADE))
     dot_id_marketing_airline = ListField(ReferenceField(Marketing_Group_Airline, reverse_delete_rule=CASCADE))
 
 
@@ -34,6 +35,7 @@ class Airplane(DynamicDocument):
 
 
 if __name__ == "__main__":
+    pass
     # Plane(name='test', mileage=11).save()
     #
     # for post in Plane.objects:
