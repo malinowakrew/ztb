@@ -12,14 +12,14 @@ class BaseModel(Model):
 class Marketing_Group_Airline(BaseModel):
     marketing_airline_network = CharField()
     iata_code_marketing_airline = CharField()
-    operated_or_branded_code_share_partners = CharField()
+    # operated_or_branded_code_share_partners = CharField()
     dot_id_marketing_airline = IntegerField()
 
 
 class Airline(BaseModel):
     airline = CharField()
     operating_airline = CharField()
-    origin_state_name = CharField()
+    # origin_state_name = CharField()
     dot_id_operating_airline = IntegerField()
     dot_id_marketing_airline = ForeignKeyField(Marketing_Group_Airline,
                                                backref='market_group',
