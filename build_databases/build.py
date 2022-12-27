@@ -3,7 +3,7 @@ import pandas as pd
 
 from mysql_database.schema import Airline, Airplane, Marketing_Group_Airline, Flight
 class_objects = {
-    'Marketing_Group_Airline': lambda kwargs: Marketing_Group_Airline(**kwargs),
+    'Marketing_Group_Airline': lambda kwargs: Marketing_Group_Airline(**kwargs).save(),
     'Airline': lambda kwargs: Airline(**kwargs).save(),
     'Airplane': lambda kwargs: Airplane(**kwargs).save(),
     'Flight': lambda kwargs: Flight(**kwargs).save()
