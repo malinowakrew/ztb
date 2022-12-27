@@ -23,4 +23,4 @@ services:
       ports:
          - "27018:27017"
       volumes:
-         -  ./mongo:/data/db/mongo
+         -  ./mongo:/time_database/db/mongo

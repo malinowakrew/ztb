@@ -1,4 +1,4 @@
-from mongoengine import connect, StringField, DynamicDocument, IntField
+from mongoengine import connect, StringField, DynamicDocument, IntField, FloatField
 from mongoengine import CASCADE, Document, StringField, IntField, ListField, DateTimeField, ReferenceField
 
 connect(
@@ -32,6 +32,11 @@ class Airplane(DynamicDocument):
     tail_number = StringField(null=True)
     # total_air_time = FloatField()
     dot_id_operating_airline = ListField(ReferenceField(Airline, reverse_delete_rule=CASCADE))
+
+class Flight(DynamicDocument):
+    distance = FloatField(null=True)
+    date = DateTimeField()
+    tail_number = ListField(ReferenceField(Airplane, reverse_delete_rule=CASCADE))
 
 
 if __name__ == "__main__":
