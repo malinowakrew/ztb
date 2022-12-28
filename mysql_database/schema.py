@@ -13,18 +13,19 @@ class Marketing_Group_Airline(BaseModel):
     marketing_airline_network = CharField()
     iata_code_marketing_airline = CharField()
     operated_or_branded_code_share_partners = CharField()
-    dot_id_marketing_airline = IntegerField()
+    dot_id_marketing_airline = FloatField()
+    id = PrimaryKeyField()
 
 
 class Airline(BaseModel):
     airline = CharField()
     operating_airline = CharField()
-    origin_state_name = CharField()
+    # originstatename = CharField()
     dot_id_operating_airline = IntegerField()
     dot_id_marketing_airline = ForeignKeyField(Marketing_Group_Airline,
                                                backref='market_group',
                                                lazy_load=False)
-                                               # to_field='dot_id_marketing_airline')
+    # to_field='dot_id_marketing_airline')
 
 
 class Airplane(BaseModel):
@@ -34,22 +35,46 @@ class Airplane(BaseModel):
                                                backref='airline',
                                                lazy_load=False)
 
+
+class Airport(BaseModel):
+    # originstatename = CharField()
+    origincityname = CharField()
+
+
 class Flight(BaseModel):
+    flight_date = DateTimeField()
+    air_time = TimeField()
+    # flight_number_operating_airline = CharField(null=True)
     distance = FloatField(null=True)
+    tail_number = ForeignKeyField(Airplane,
+                                  backref='airplane',
+                                  lazy_load=False)
+    origincityname = ForeignKeyField(Airport,
+                                       backref='airport',
+                                       lazy_load=False)
+    destcityname = ForeignKeyField(Airport,
+                                     backref='airport',
+                                     lazy_load=False)
 
 
 if __name__ == "__main__":
     db.connect()
-    # dq = AirPlane.delete()
-    # dq.execute()
-    #
-    # dq = Airline.delete()
-    # dq.execute()
-    #
-    # dq = Marketing_Group_Airline.delete()
-    # dq.execute()
-    #
-    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Flight])
+    dq = Airplane.delete()
+    dq.execute()
+
+    dq = Airline.delete()
+    dq.execute()
+
+    dq = Marketing_Group_Airline.delete()
+    dq.execute()
+
+    dq = Flight.delete()
+    dq.execute()
+
+    dq = Airport.delete()
+    dq.execute()
+
+    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Flight, Airport])
 
     # inst = Airline.select(
     #     Marketing_Group_Airline.iata_code_marketing_airline,
@@ -61,6 +86,6 @@ if __name__ == "__main__":
     # inst = Airline.select(Airline.airline).where(Airline.airline == 'Southwest Airlines Co.')
     # print(len(inst))
 
-    # dq = Airplane.select(Airplane.tail_number).dicts()
+    # dq = Flight.select().dicts()
     # for o in dq:
     #     print(o)

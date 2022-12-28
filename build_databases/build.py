@@ -1,12 +1,15 @@
 from zipfile import ZipFile
 import pandas as pd
 
-from mysql_database.schema import Airline, Airplane, Marketing_Group_Airline, Flight
+from mysql_database.schema import Airline, Airplane, Marketing_Group_Airline, Flight, Airport
+
 class_objects = {
-    'Marketing_Group_Airline': lambda kwargs: Marketing_Group_Airline(**kwargs),
+    'Marketing_Group_Airline': lambda kwargs: Marketing_Group_Airline(**kwargs).save(),
     'Airline': lambda kwargs: Airline(**kwargs).save(),
     'Airplane': lambda kwargs: Airplane(**kwargs).save(),
-    'Flight': lambda kwargs: Flight(**kwargs).save()
+    'Flight': lambda kwargs: Flight(**kwargs).save(),
+    'Airport': lambda kwargs: Airport(**kwargs).save(),
+
 }
 
 
@@ -31,10 +34,13 @@ foreign_keys_in_airline = {'DOT_ID_Marketing_Airline': lambda x: Marketing_Group
 
 foreign_keys_in_airplane = {'DOT_ID_Operating_Airline': lambda x: Airline.get(Airline.dot_id_operating_airline == x)}
 
+foreign_keys_in_flight = {'Tail_Number': lambda x: Airplane.get(Airplane.tail_number == x),
+                          'OriginCityName': lambda x: Airport.get(Airport.origincityname == x),
+                          'DestCityName': lambda x: Airport.get(Airport.destcityname == x)}
 
 if __name__ == "__main__":
-    with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
-        zObject.extractall(path='Combined_Flights_2022.parquet')
+    # with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
+    # zObject.extractall(path='Combined_Flights_2022.parquet')
 
     df = pd.read_parquet('Combined_Flights_2022.parquet', engine='pyarrow')
     print(df.columns)
@@ -47,7 +53,7 @@ if __name__ == "__main__":
 
     columns_list = ['Airline',
                     'Operating_Airline',
-                    'OriginStateName',
+                    # 'OriginStateName',
                     'DOT_ID_Operating_Airline',
                     'DOT_ID_Marketing_Airline']
     write_table(df, columns_list, 'Airline', foreign_keys_in_airline)
@@ -56,5 +62,15 @@ if __name__ == "__main__":
                     'DOT_ID_Operating_Airline']
     write_table(df, columns_list, 'Airplane', foreign_keys_in_airplane)
 
-    columns_list = ['Distance']
-    write_table(df, columns_list, 'Flight')
+    columns_list = ['OriginCityName']
+                    # 'OriginStateName']
+    write_table(df, columns_list, 'Airport')
+
+    columns_list = ['FlightDate',
+                    'OriginCityName',
+                    'DestCityName',
+                    'AirTime',
+                    'Distance',
+                    'Tail_Number']
+    # 'Flight_Number_Operating_Airline']
+    write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
