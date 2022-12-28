@@ -1,6 +1,6 @@
 from peewee import *
 
-db_connection = SqliteDatabase(r'app\time_database\db\results.db')
+db_connection = SqliteDatabase(r'C:\Users\edzia\Desktop\PK\ztb\app\time_database\db\results.db')
 
 
 class BaseModel(Model):

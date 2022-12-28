@@ -24,11 +24,11 @@ def measure_operation_time(operation_type: str, database_type: str):
     return measure_time
 
 
-# @measure_operation_time(operation_type='none', database_type='none')
-# def func():
-#     for i in range(1, 10000):
-#         i += 1
-#
-#
-# if __name__ == "__main__":
-#     func()
+@measure_operation_time(operation_type='none', database_type='none')
+def func():
+    for i in range(1, 10000):
+        i += 1
+
+
+if __name__ == "__main__":
+    func()
