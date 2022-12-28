@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-12-21T16:44:10.915Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15" etag="hARIBIsqspdf8ooPd7oZ" version="20.7.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-12-28T20:44:03.436Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15" etag="LoWxyXL2jDrO0i8u_Qcx" version="20.7.4" type="github">
   <diagram id="cKCc0jR74fOGtw8gL9MU" name="Strona-1">
-    <mxGraphModel dx="954" dy="556" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="954" dy="558" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -46,7 +46,7 @@
         <mxCell id="CRXHUfZHLQPuHycPH1mf-18" value="distance" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="jGKh4-YGcGPF5x8p1wz1-9">
           <mxGeometry y="150" width="190" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="CRXHUfZHLQPuHycPH1mf-19" value="flight_number_operating_airline" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="jGKh4-YGcGPF5x8p1wz1-9">
+        <mxCell id="CRXHUfZHLQPuHycPH1mf-28" value="tail_number" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="jGKh4-YGcGPF5x8p1wz1-9">
           <mxGeometry y="180" width="190" height="30" as="geometry" />
         </mxCell>
         <mxCell id="jGKh4-YGcGPF5x8p1wz1-10" value="Airplane" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -59,7 +59,7 @@
           <mxGeometry y="60" width="145" height="30" as="geometry" />
         </mxCell>
         <mxCell id="jGKh4-YGcGPF5x8p1wz1-11" value="City" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="600" y="520" width="140" height="60" as="geometry" />
+          <mxGeometry x="602.5" y="545" width="140" height="60" as="geometry" />
         </mxCell>
         <mxCell id="CRXHUfZHLQPuHycPH1mf-9" value="Marketing_Group_Airline" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="40" y="40" width="270" height="150" as="geometry" />
@@ -81,6 +81,12 @@
         </mxCell>
         <mxCell id="CRXHUfZHLQPuHycPH1mf-26" value="wheels_off" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="250" y="515" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXHUfZHLQPuHycPH1mf-27" value="origin_airport_id" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="602.5" y="420" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="CRXHUfZHLQPuHycPH1mf-19" value="flight_number_operating_airline" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="372" y="530" width="190" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
