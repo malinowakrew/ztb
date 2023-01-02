@@ -40,7 +40,7 @@ class Flight(BaseModel):
 
 if __name__ == "__main__":
     db.connect()
-    # dq = AirPlane.delete()
+    # dq = Airplane.delete()
     # dq.execute()
     #
     # dq = Airline.delete()
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     #
     # dq = Marketing_Group_Airline.delete()
     # dq.execute()
-    #
+
     db.create_tables([Marketing_Group_Airline, Airline, Airplane, Flight])
 
     # inst = Airline.select(
