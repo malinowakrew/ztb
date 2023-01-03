@@ -58,20 +58,20 @@ class Flight(BaseModel):
 
 if __name__ == "__main__":
     db.connect()
-    dq = Flight.delete()
-    dq.execute()
-
-    dq = Airport.delete()
-    dq.execute()
-
-    dq = Airplane.delete()
-    dq.execute()
-
-    dq = Airline.delete()
-    dq.execute()
-
-    dq = Marketing_Group_Airline.delete()
-    dq.execute()
+    # dq = Flight.delete()
+    # dq.execute()
+    #
+    # dq = Airport.delete()
+    # dq.execute()
+    #
+    # dq = Airplane.delete()
+    # dq.execute()
+    #
+    # dq = Airline.delete()
+    # dq.execute()
+    #
+    # dq = Marketing_Group_Airline.delete()
+    # dq.execute()
 
     db.create_tables([Marketing_Group_Airline, Airline, Airplane, Airport, Flight])
 

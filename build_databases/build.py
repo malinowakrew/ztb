@@ -46,42 +46,40 @@ if __name__ == "__main__":
     print(df.columns)
     df.dropna(inplace=True)
 
-    # columns_list = ['Marketing_Airline_Network',
-    #                 'IATA_Code_Marketing_Airline',
-    #                 'Operated_or_Branded_Code_Share_Partners',
-    #                 'DOT_ID_Marketing_Airline']
-    # write_table(df, columns_list, 'Marketing_Group_Airline')
-    #
-    # columns_list = ['Airline',
-    #                 'Operating_Airline',
-    #                 'DOT_ID_Operating_Airline',
-    #                 'DOT_ID_Marketing_Airline']
-    # write_table(df, columns_list, 'Airline', foreign_keys_in_airline)
-    #
-    # columns_list = ['Tail_Number',
-    #                 'DOT_ID_Operating_Airline']
-    # write_table(df, columns_list, 'Airplane', foreign_keys_in_airplane)
+    columns_list = ['Marketing_Airline_Network',
+                    'IATA_Code_Marketing_Airline',
+                    'Operated_or_Branded_Code_Share_Partners',
+                    'DOT_ID_Marketing_Airline']
+    write_table(df, columns_list, 'Marketing_Group_Airline')
+
+    columns_list = ['Airline',
+                    'Operating_Airline',
+                    'DOT_ID_Operating_Airline',
+                    'DOT_ID_Marketing_Airline']
+    write_table(df, columns_list, 'Airline', foreign_keys_in_airline)
+
+    columns_list = ['Tail_Number',
+                    'DOT_ID_Operating_Airline']
+    write_table(df, columns_list, 'Airplane', foreign_keys_in_airplane)
 
     df_temp = pd.concat(
-        [df[['OriginCityName']], df[['DestCityName']].rename(columns={'DestCityName': 'OriginCityName'})], axis=0, ignore_index=True)
-    print(df_temp)
-    df_temp.columns = ['OriginCityName']
+        [df[['OriginCityName', 'OriginStateName']],
+         df[['DestCityName', 'OriginStateName']].rename(columns={'DestCityName': 'OriginCityName'})],
+        axis=0, ignore_index=True)
+    # df_temp.columns = ['OriginCityName']
     df_temp = df_temp.drop_duplicates(keep='first')
-    df_exp = df_temp['OriginCityName'].str.split(pat=',', expand=True)
-    df_exp.columns = ['OriginCityName', 'StateName']
-    df_exp = df_exp.reset_index()
-    df_temp_airport = pd.concat([df, df_exp], axis=1, ignore_index=True).reset_index()
-    print(df_temp_airport)
+    # df_exp = df_temp['OriginCityName'].str.split(pat=',', expand=True)
+    df_temp.columns = ['OriginCityName', 'StateName']
 
-    # columns_list = ['OriginCityName',
-    #                 'StateName']
-    # write_table(df_temp_airport, columns_list, 'Airport')
-    #
-    # columns_list = ['FlightDate',
-    #                 'OriginCityName',
-    #                 'DestCityName',
-    #                 'AirTime',
-    #                 'Distance',
-    #                 'Tail_Number',
-    #                 'Flight_Number_Operating_Airline']
-    # write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
+    columns_list = ['OriginCityName',
+                    'StateName']
+    write_table(df_temp, columns_list, 'Airport')
+
+    columns_list = ['FlightDate',
+                    'OriginCityName',
+                    'DestCityName',
+                    'AirTime',
+                    'Distance',
+                    'Tail_Number',
+                    'Flight_Number_Operating_Airline']
+    write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
