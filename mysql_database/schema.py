@@ -14,7 +14,6 @@ class Marketing_Group_Airline(BaseModel):
     iata_code_marketing_airline = CharField()
     operated_or_branded_code_share_partners = CharField()
     dot_id_marketing_airline = FloatField()
-    id = PrimaryKeyField()
 
 
 class Airline(BaseModel):
@@ -29,7 +28,7 @@ class Airline(BaseModel):
 
 
 class Airplane(BaseModel):
-    tail_number = CharField(null=True)
+    tail_number = CharField()
     # total_air_time = FloatField()
     dot_id_operating_airline = ForeignKeyField(Airline,
                                                backref='airline',
@@ -37,14 +36,14 @@ class Airplane(BaseModel):
 
 
 class Airport(BaseModel):
-    # originstatename = CharField()
+    statename = CharField()
     origincityname = CharField()
 
 
 class Flight(BaseModel):
-    flight_date = DateTimeField()
-    air_time = TimeField()
-    # flight_number_operating_airline = CharField(null=True)
+    flightdate = DateTimeField()
+    airtime = TimeField()
+    flight_number_operating_airline = IntegerField()
     distance = FloatField(null=True)
     tail_number = ForeignKeyField(Airplane,
                                   backref='airplane',
@@ -59,6 +58,12 @@ class Flight(BaseModel):
 
 if __name__ == "__main__":
     db.connect()
+    dq = Flight.delete()
+    dq.execute()
+
+    dq = Airport.delete()
+    dq.execute()
+
     dq = Airplane.delete()
     dq.execute()
 
@@ -68,13 +73,7 @@ if __name__ == "__main__":
     dq = Marketing_Group_Airline.delete()
     dq.execute()
 
-    dq = Flight.delete()
-    dq.execute()
-
-    dq = Airport.delete()
-    dq.execute()
-
-    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Flight, Airport])
+    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Airport, Flight])
 
     # inst = Airline.select(
     #     Marketing_Group_Airline.iata_code_marketing_airline,
