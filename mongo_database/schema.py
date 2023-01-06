@@ -44,7 +44,3 @@ class Flight(DynamicDocument):
 
 if __name__ == "__main__":
     pass
-    # Plane(name='test', mileage=11).save()
-    #
-    # for post in Plane.objects:
-    #     print(post.name, post.mileage)
