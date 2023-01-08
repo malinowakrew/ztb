@@ -1,5 +1,6 @@
 from zipfile import ZipFile
 import pandas as pd
+from app.measure_time import measure_operation_time
 
 from mysql_database.schema import Airline, Airplane, Marketing_Group_Airline, Flight, Airport
 
@@ -38,11 +39,14 @@ foreign_keys_in_flight = {'Tail_Number': lambda x: Airplane.get(Airplane.tail_nu
                           'OriginCityName': lambda x: Airport.get(Airport.origincityname == x),
                           'DestCityName': lambda x: Airport.get(Airport.origincityname == x)}
 
-if __name__ == "__main__":
+
+@measure_operation_time(operation_type='Ładowanie', database_type='mysql')
+def build_mysql_db():
     with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
         zObject.extractall(path='Combined_Flights_2022.parquet')
 
     df = pd.read_parquet('Combined_Flights_2022.parquet', engine='pyarrow')
+    df = df.iloc[:, :10]
     print(df.columns)
     df.dropna(inplace=True)
 
@@ -66,9 +70,7 @@ if __name__ == "__main__":
         [df[['OriginCityName', 'OriginStateName']],
          df[['DestCityName', 'OriginStateName']].rename(columns={'DestCityName': 'OriginCityName'})],
         axis=0, ignore_index=True)
-    # df_temp.columns = ['OriginCityName']
     df_temp = df_temp.drop_duplicates(keep='first')
-    # df_exp = df_temp['OriginCityName'].str.split(pat=',', expand=True)
     df_temp.columns = ['OriginCityName', 'StateName']
 
     columns_list = ['OriginCityName',
@@ -83,3 +85,7 @@ if __name__ == "__main__":
                     'Tail_Number',
                     'Flight_Number_Operating_Airline']
     write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
+
+
+if __name__ == "__main__":
+    build_mysql_db()

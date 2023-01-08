@@ -2,6 +2,7 @@ from zipfile import ZipFile
 import pandas as pd
 import mongo_database.schema as mongo_schema
 from mongoengine import connect, disconnect
+from app.measure_time import measure_operation_time
 
 disconnect()
 
@@ -47,36 +48,13 @@ foreign_keys_in_flight = {'Tail_Number': lambda x: mongo_schema.Airplane.objects
                           'DestCityName': lambda x: mongo_schema.Airport.objects(origincityname=x)}
 
 
-if __name__ == "__main__":
-    # with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
-    #     zObject.extractall(path='Combined_Flights_2022.parquet')
-    #
-    # df = pd.read_parquet('Combined_Flights_2022.parquet', engine='pyarrow')
-    # print(df.columns)
-    #
-    # columns_list = ['Marketing_Airline_Network',
-    #                 'IATA_Code_Marketing_Airline',
-    #                 # 'Operated_or_Branded_Code_Share_Partners',
-    #                 'DOT_ID_Marketing_Airline']
-    # write_table(df, columns_list, 'Marketing_Group_Airline')
-    #
-    # columns_list = ['Airline',
-    #                 'Operating_Airline',
-    #                 # 'OriginStateName',
-    #                 'DOT_ID_Operating_Airline',
-    #                 'DOT_ID_Marketing_Airline']
-    # write_table(df, columns_list, 'Airline', foreign_keys_in_airline)
-    #
-    # columns_list = ['Tail_Number',
-    #                 'DOT_ID_Operating_Airline']
-    # write_table(df, columns_list, 'Airplane', foreign_keys_in_airplane)
-    #
-    # # columns_list = ['Distance']
-    # # write_table(df, columns_list, 'Flight')
+@measure_operation_time(operation_type='Ładowanie', database_type='mongo')
+def build_mongo_db():
     with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
         zObject.extractall(path='Combined_Flights_2022.parquet')
 
     df = pd.read_parquet('Combined_Flights_2022.parquet', engine='pyarrow')
+    df = df.iloc[:, :10]
     print(df.columns)
     df.dropna(inplace=True)
 
@@ -100,9 +78,7 @@ if __name__ == "__main__":
         [df[['OriginCityName', 'OriginStateName']],
          df[['DestCityName', 'OriginStateName']].rename(columns={'DestCityName': 'OriginCityName'})],
         axis=0, ignore_index=True)
-    # df_temp.columns = ['OriginCityName']
     df_temp = df_temp.drop_duplicates(keep='first')
-    # df_exp = df_temp['OriginCityName'].str.split(pat=',', expand=True)
     df_temp.columns = ['OriginCityName', 'StateName']
 
     columns_list = ['OriginCityName',
@@ -117,3 +93,7 @@ if __name__ == "__main__":
                     'Tail_Number',
                     'Flight_Number_Operating_Airline']
     write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
+
+
+if __name__ == "__main__":
+    build_mongo_db()

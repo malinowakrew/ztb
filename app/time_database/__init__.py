@@ -8,12 +8,27 @@ class BaseModel(Model):
         database = db_connection
 
 
-class Results(BaseModel):
+class TimeResults(BaseModel):
     database_name = CharField()
     operation_type = CharField()
-    value = FloatField()
+    operation_time = TimeField()
+    value = FloatField(null=True)
+
+
+class ComputerUsageResults(BaseModel):
+    database_name = CharField()
+    operation_type = CharField()
+    operation_time = TimeField()
+    cpu_percentage = FloatField(null=True)
+    ram_gb = FloatField(null=True)
+    ram_memory = FloatField(null=True)
 
 
 if __name__ == "__main__":
-    db_connection.connect()
-    db_connection.create_tables([Results])
+    # db_connection.connect()
+    # db_connection.create_tables([TimeResults, ComputerUsageResults])
+    for v in ComputerUsageResults.select():
+        print(v.ram_memory)
+
+    for v in TimeResults.select():
+        print(v)
