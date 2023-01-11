@@ -11,21 +11,22 @@ from zipfile import ZipFile
 
 def measure_cpu_usage(run, database_type, operation_type):
     while run():
-        cpu = psutil.cpu_percent()
-        ram_gb = psutil.virtual_memory()[2]
-        ram_memory = psutil.virtual_memory()[3] / 1000000000
-        timestamp = time()
-        ComputerUsageResults(database_name=database_type,
-                             operation_type=operation_type,
-                             operation_time=timestamp,
-                             cpu_percentage=cpu,
-                             ram_gb=ram_gb,
-                             ram_memory=ram_memory).save()
-
-        print('CPU:', cpu)
-        print('RAM memory % used:', ram_gb)
-        print('RAM Used (GB):', ram_memory)
-        sleep(10)
+        # cpu = psutil.cpu_percent()
+        # ram_gb = psutil.virtual_memory()[2]
+        # ram_memory = psutil.virtual_memory()[3] / 1000000000
+        # timestamp = time()
+        # ComputerUsageResults(database_name=database_type,
+        #                      operation_type=operation_type,
+        #                      operation_time=timestamp,
+        #                      cpu_percentage=cpu,
+        #                      ram_gb=ram_gb,
+        #                      ram_memory=ram_memory).save()
+        #
+        # print('CPU:', cpu)
+        # print('RAM memory % used:', ram_gb)
+        # print('RAM Used (GB):', ram_memory)
+        # sleep(10)
+        pass
 
 
 def measure_operation_time(operation_type: str, database_type: str):

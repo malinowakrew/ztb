@@ -25,8 +25,8 @@ class ComputerUsageResults(BaseModel):
 
 
 if __name__ == "__main__":
-    # db_connection.connect()
-    # db_connection.create_tables([TimeResults, ComputerUsageResults])
+    db_connection.connect()
+    db_connection.create_tables([TimeResults, ComputerUsageResults])
     for v in ComputerUsageResults.select():
         print(v.ram_memory)
 

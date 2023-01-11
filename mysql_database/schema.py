@@ -1,5 +1,4 @@
 from peewee import *
-import datetime
 
 db = MySQLDatabase('test', host='localhost', port=3307, user='test', password='test')
 
@@ -17,7 +16,7 @@ class Marketing_Group_Airline(BaseModel):
 
 
 class Airline(BaseModel):
-    airline = CharField()
+    airline_name = TextField()
     operating_airline = CharField()
     # originstatename = CharField()
     dot_id_operating_airline = IntegerField()
@@ -49,11 +48,21 @@ class Flight(BaseModel):
                                   backref='airplane',
                                   lazy_load=False)
     origincityname = ForeignKeyField(Airport,
-                                       backref='airport',
-                                       lazy_load=False)
-    destcityname = ForeignKeyField(Airport,
                                      backref='airport',
                                      lazy_load=False)
+    destcityname = ForeignKeyField(Airport,
+                                   backref='airport',
+                                   lazy_load=False)
+
+
+class Delay(BaseModel):
+    departuredelaygroups = IntegerField()
+    depdelay = IntegerField()
+    arrdelay = IntegerField()
+    arrivaldelaygroups = IntegerField()
+    flight_number_operating_airline = ForeignKeyField(Flight,
+                                                      backref='flight',
+                                                      lazy_load=False)
 
 
 if __name__ == "__main__":
@@ -73,18 +82,7 @@ if __name__ == "__main__":
     # dq = Marketing_Group_Airline.delete()
     # dq.execute()
 
-    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Airport, Flight])
+    # dq = Delay.delete()
+    # dq.execute()
 
-    # inst = Airline.select(
-    #     Marketing_Group_Airline.iata_code_marketing_airline,
-    #     Airline.airline,
-    #     fn.COUNT(Airline.airline).alias('count')).join(Marketing_Group_Airline).group_by(Marketing_Group_Airline.iata_code_marketing_airline).dicts()
-    # for o in inst:
-    #     print(o)
-
-    # inst = Airline.select(Airline.airline).where(Airline.airline == 'Southwest Airlines Co.')
-    # print(len(inst))
-
-    # dq = Flight.select().dicts()
-    # for o in dq:
-    #     print(o)
+    db.create_tables([Marketing_Group_Airline, Airline, Airplane, Airport, Flight, Delay])

@@ -17,7 +17,8 @@ class_objects_mongo = {
     'Airline': lambda kwargs: mongo_schema.Airline(**kwargs).save(),
     'Airplane': lambda kwargs: mongo_schema.Airplane(**kwargs).save(),
     'Airport': lambda kwargs: mongo_schema.Airport(**kwargs).save(),
-    'Flight': lambda kwargs: mongo_schema.Flight(**kwargs).save()
+    'Flight': lambda kwargs: mongo_schema.Flight(**kwargs).save(),
+    'Delay': lambda kwargs: mongo_schema.Delay(**kwargs).save()
 }
 
 
@@ -47,6 +48,9 @@ foreign_keys_in_flight = {'Tail_Number': lambda x: mongo_schema.Airplane.objects
                           'OriginCityName': lambda x: mongo_schema.Airport.objects(origincityname=x),
                           'DestCityName': lambda x: mongo_schema.Airport.objects(origincityname=x)}
 
+foreign_keys_in_delay = {'Flight_Number_Operating_Airline':
+                                lambda x: mongo_schema.Flight.objects(flight_number_operating_airline=x)}
+
 
 @measure_operation_time(operation_type='Ładowanie', database_type='mongo')
 def build_mongo_db():
@@ -54,9 +58,11 @@ def build_mongo_db():
         zObject.extractall(path='Combined_Flights_2022.parquet')
 
     df = pd.read_parquet('Combined_Flights_2022.parquet', engine='pyarrow')
-    df = df.iloc[:, :10]
+    df = df.iloc[:10, :]
+    df.dropna(inplace=True)  # TODO update this line to don't throw notdelayed.
+
+    df.rename(columns={'Airline': 'Airline_name'}, inplace=True)
     print(df.columns)
-    df.dropna(inplace=True)
 
     columns_list = ['Marketing_Airline_Network',
                     'IATA_Code_Marketing_Airline',
@@ -64,7 +70,7 @@ def build_mongo_db():
                     'DOT_ID_Marketing_Airline']
     write_table(df, columns_list, 'Marketing_Group_Airline')
 
-    columns_list = ['Airline',
+    columns_list = ['Airline_name',
                     'Operating_Airline',
                     'DOT_ID_Operating_Airline',
                     'DOT_ID_Marketing_Airline']
@@ -93,6 +99,13 @@ def build_mongo_db():
                     'Tail_Number',
                     'Flight_Number_Operating_Airline']
     write_table(df, columns_list, 'Flight', foreign_keys_in_flight)
+
+    columns_list = ['ArrivalDelayGroups',
+                    'ArrDelay',
+                    'DepartureDelayGroups',
+                    'DepDelay',
+                    'Flight_Number_Operating_Airline']
+    write_table(df, columns_list, 'Delay', foreign_keys_in_delay)
 
 
 if __name__ == "__main__":

@@ -15,7 +15,7 @@ class Marketing_Group_Airline(DynamicDocument):
 
 
 class Airline(DynamicDocument):
-    airline = StringField()
+    airline_name = StringField()
     operating_airline = StringField()
     origin_state_name = StringField()
     dot_id_operating_airline = IntField()
@@ -42,5 +42,9 @@ class Flight(DynamicDocument):
     destcityname = ListField(ReferenceField(Airport, reverse_delete_rule=CASCADE))
 
 
-if __name__ == "__main__":
-    pass
+class Delay(DynamicDocument):
+    departuredelaygroups = IntField(null=True)
+    depdelay = IntField(null=True)
+    arrdelay = IntField(null=True)
+    arrivaldelaygroups = IntField(null=True)
+    flight_number_operating_airline = ListField(ReferenceField(Flight, reverse_delete_rule=CASCADE))
