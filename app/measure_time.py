@@ -1,5 +1,8 @@
 from time import time
 from functools import wraps
+
+import numpy as np
+
 from app.time_database import TimeResults, ComputerUsageResults
 from threading import Thread
 from time import sleep
@@ -29,7 +32,10 @@ def measure_cpu_usage(run, database_type, operation_type):
         pass
 
 
-def measure_operation_time(operation_type: str, database_type: str):
+operation_type_with_rows_number = ['Ładowanie', 'Usuwanie']
+
+
+def measure_operation_time(operation_type: str, database_type: str, rows_number: int):
     def measure_time(fun):
         @wraps(fun)
         def wrap(*args, **kw):
@@ -53,17 +59,19 @@ def measure_operation_time(operation_type: str, database_type: str):
                   f'with operation {operation_type} in {database_type}: {duration_time}')
 
             timestamp = time()
+
             TimeResults(database_name=database_type,
                         operation_type=operation_type,
                         operation_time=timestamp,
-                        value=duration_time).save()
+                        value=duration_time,
+                        number_of_rows=rows_number).save()
 
             return result
         return wrap
     return measure_time
 
 
-@measure_operation_time(operation_type='none', database_type='none')
+@measure_operation_time(operation_type='none', database_type='none', rows_number=-1)
 def func():
     with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
         zObject.extractall(path='Combined_Flights_2022.parquet')

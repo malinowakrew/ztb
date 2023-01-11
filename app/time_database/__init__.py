@@ -13,6 +13,7 @@ class TimeResults(BaseModel):
     operation_type = CharField()
     operation_time = TimeField()
     value = FloatField(null=True)
+    number_of_rows = FloatField(null=True)
 
 
 class ComputerUsageResults(BaseModel):

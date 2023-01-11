@@ -52,7 +52,7 @@ foreign_keys_in_delay = {'Flight_Number_Operating_Airline':
                                 lambda x: mongo_schema.Flight.objects(flight_number_operating_airline=x)}
 
 
-@measure_operation_time(operation_type='Ładowanie', database_type='mongo')
+@measure_operation_time(operation_type='Ładowanie', database_type='mongo', rows_number=10)
 def build_mongo_db():
     with ZipFile('Combined_Flights_2022.parquet.zip', 'r') as zObject:
         zObject.extractall(path='Combined_Flights_2022.parquet')
